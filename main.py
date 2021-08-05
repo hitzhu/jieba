@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import re
 
 word_dir = {}
-other=["收到","明天","昨天"]
+other=["收到","明天","昨天",'谢谢',"多久","你妹","不用","干嘛","早上","刚刚","一份","一点","几张","东西","地方","我记",
+       "好不好"
+       ]
 
 # 创建停用词列表
 def stopwordslist():
@@ -28,7 +30,7 @@ def seg_depart(sentence):
     k=re.findall(r'[\u4e00-\u9fa5]+',sentence)
     #print(k)
     if len(k)>0:
-        sentence_depart = jieba.lcut(k[0])
+        sentence_depart = jieba.lcut(k[0],cut_all=False)
 
     # 创建一个停用词列表
         stopwords = stopwordslist()
@@ -49,16 +51,16 @@ def seg_depart(sentence):
 
 
 def img_grearte():
-    mask = imread("1.jpeg")
+    mask = imread("1.bmp")
     with open("out.txt", "r", encoding="utf-8") as file:
         txt = file.read()
     word = WordCloud(background_color="white",
                      width=1000,
                      height=1000,
                      font_path='C:\Windows\Fonts\simkai.ttf',
-                     # mask=mask,
+                      mask=mask,
                      ).generate_from_frequencies(word_dir)
-    word.to_file('test.png')
+    word.to_file('微信聊天.png')
     print("词云图片已保存")
 
     plt.imshow(word)  # 使用plt库显示图片
@@ -67,7 +69,7 @@ def img_grearte():
 
 
 # 给出文档路径
-filename = "wx_record.txt"
+filename = "微信聊天.txt"
 outfilename = "out.txt"
 inputs = open(filename, 'r', encoding='UTF-8')
 outputs = open(outfilename, 'w', encoding='UTF-8')
